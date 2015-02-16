@@ -77,32 +77,6 @@ Top-level actions are then mapped as follows (by default):
     PUT     /:id              ->  update
     DELETE  /:id              ->  destroy
     
-## Resource Path Resolution
-
-Resolve paths for each action of a resource:
-
-    // Non-nested resources examples
-    app.resource('users');
-    app.resource('users').newPath()           ->  /users/new
-    app.resource('users').editPath(42)        ->  /users/42/edit
-    app.resource('users').collectionPath()    ->  /users/
-    app.resource('users').recordPath(42)	  ->  /users/42
-    
-    
-    //Nested resources examples
-    var app = express();
-    var dummyController = {show: function(req, res) { res.send('hello world'); }};
-    var forums = app.resource('forums', dummyController);
-    var threads = app.resource('threads', dummyController);
-    var replies = app.resource('replies', dummyController);
-    forums.add(threads);
-    threads.add(replies);
-    
-    app.resource('replies').newPath(1, 2)         ->  /forums/1/threads/2/replies/new
-    app.resource('replies').editPath(1, 2, 3)     ->  /forums/1/threads/2/replies/3/edit
-    app.resource('replies').collectionPath(1, 2)  ->  /forums/1/threads/2/replies
-    app.resource('replies').recordPath(1, 2, 3)   ->  /forums/1/threads/2/replies/3
-
 ## Auto-Loading
 
 Resources have the concept of "auto-loading" associated data. For example we can pass a "load" property along with our actions, which should invoke the callback function with an error, or the object such as a `User`:
@@ -137,6 +111,32 @@ Resources have the concept of "auto-loading" associated data. For example we can
       forums.add(threads);
 
   Now when we request `GET /forums/5/threads/12` both the `req.forum` object, and `req.thread` will be available to thread's _show_ action.
+
+## Resource Path Resolution
+
+Resolve paths for each action of a resource:
+
+    // Non-nested resources examples
+    app.resource('users');
+    app.resource('users').newPath()           ->  /users/new
+    app.resource('users').editPath(42)        ->  /users/42/edit
+    app.resource('users').collectionPath()    ->  /users/
+    app.resource('users').recordPath(42)	  ->  /users/42
+    
+    
+    //Nested resources examples
+    var app = express();
+    var dummyController = {show: function(req, res) { res.send('hello world'); }};
+    var forums = app.resource('forums', dummyController);
+    var threads = app.resource('threads', dummyController);
+    var replies = app.resource('replies', dummyController);
+    forums.add(threads);
+    threads.add(replies);
+    
+    app.resource('replies').newPath(1, 2)         ->  /forums/1/threads/2/replies/new
+    app.resource('replies').editPath(1, 2, 3)     ->  /forums/1/threads/2/replies/3/edit
+    app.resource('replies').collectionPath(1, 2)  ->  /forums/1/threads/2/replies
+    app.resource('replies').recordPath(1, 2, 3)   ->  /forums/1/threads/2/replies/3
 
 ## Content-Negotiation
 
