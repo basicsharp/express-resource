@@ -29,7 +29,7 @@ var orderedActions = [
   , 'edit'    //  GET   /edit/:id
   , 'update'  //  PUT   /:id
   , 'patch'   //  PATCH /:id
-  , 'destroy' //  DEL   /:id
+  , 'destroy' //  DELETE   /:id
 ];
 
 /**

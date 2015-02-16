@@ -76,6 +76,32 @@ Top-level actions are then mapped as follows (by default):
     GET     /:id/edit         ->  edit
     PUT     /:id              ->  update
     DELETE  /:id              ->  destroy
+    
+## Resource Path Resolution
+
+Resolve paths for each action of a resource:
+
+    // Non-nested resources examples
+    app.resource('users');
+    app.resource('users').newPath()           ->  /users/new
+    app.resource('users').editPath(42)        ->  /users/42/edit
+    app.resource('users').collectionPath()    ->  /users/
+    app.resource('users').recordPath(42)	  ->  /users/42
+    
+    
+    //Nested resources examples
+    var app = express();
+    var dummyController = {show: function(req, res) { res.send('hello world'); }};
+    var forums = app.resource('forums', dummyController);
+    var threads = app.resource('threads', dummyController);
+    var replies = app.resource('replies', dummyController);
+    forums.add(threads);
+    threads.add(replies);
+    
+    app.resource('replies').newPath(1, 2)         ->  /forums/1/threads/2/replies/new
+    app.resource('replies').editPath(1, 2, 3)     ->  /forums/1/threads/2/replies/3/edit
+    app.resource('replies').collectionPath(1, 2)  ->  /forums/1/threads/2/replies
+    app.resource('replies').recordPath(1, 2, 3)   ->  /forums/1/threads/2/replies/3
 
 ## Auto-Loading
 
