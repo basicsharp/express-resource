@@ -242,7 +242,7 @@ Resource.prototype.mapDefaultAction = function(key, fn){
       this.patch(fn);
       break;
     case 'destroy':
-      this.del(fn);
+      this.delete(fn);
       break;
   }
 };
